@@ -1,0 +1,17 @@
+<ul class="nav nav-tabs mb-3 d-flex flex-direction-row justify-content-start">
+    <li class="nav-item">
+      <a class="nav-link{% if active == 'active' %} active{% endif %}  text-dark fw-bold" href="{%url 'accounts:profile_reservation_requests'%}">Все</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link{% if active == 'progress' %} active{% endif %}  text-dark fw-bold" href="{%url 'accounts:profile_reservation_requests_progress'%}">На рассмотрении</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link{% if active == 'accepted' %} active{% endif %}  text-dark fw-bold" href="{%url 'accounts:profile_reservation_requests_accepted'%}">Принятые</a>
+      </li>
+    <li class="nav-item">
+      <a class="nav-link{% if active == 'ended' %} active{% endif %} text-dark fw-bold" href="{%url 'accounts:profile_reservation_requests_ended'%}">Завершённые</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link{% if active == 'canceled' %} active{% endif %} text-dark fw-bold" href="{%url 'accounts:profile_reservation_requests_canceled'%}">Отклоненные</a>
+      </li>
+  </ul>

@@ -1,0 +1,11 @@
+<ul class="nav nav-tabs mb-3 d-flex flex-direction-row justify-content-start">
+    <li class="nav-item">
+      <a class="nav-link{% if active == 'active' %} active{% endif %}  text-dark fw-bold" href="{%url 'accounts:profile'%}">Активные <span class="text-primary">({{rooms.count}})</span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link{% if active == 'archived' %} active{% endif %} text-dark fw-bold" href="{%url 'accounts:profile_archived'%}">Архив <span class="text-primary">({{rooms_archived.count}})</span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link{% if active == 'category' %} active{% endif %} text-dark fw-bold" href=""></a>
+    </li>
+  </ul>

@@ -1,0 +1,88 @@
+{%  extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="container mt-5">
+        <h2 class="mb-3 text-muted me-3">Изменение обьявление </h2>
+        <h3 class="d-inline-block me-3">Шаг 3 - Фотографии, описание, цена</h3>
+        <hr>
+        <p class="d-flex flex-row justify-content-start align-items-center">
+            <a href="{% url 'rental:advt_edit_step_2' new_advt.id%}"type="button" class="btn btn-secondary d-inline-block me-5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                  </svg>
+                 Назад к шагу 2
+            </a>
+
+            <span class="text-muted d-inline-block">Заполнение информации о квартире, правила заселения</span>
+        </p>
+
+        <form method="POST" class="mt-5 mb-5"  enctype="multipart/form-data">
+            {% csrf_token%}
+            <h2 class="text-start mb-4">Фотографии</h2>
+            <img src="{{new_advt.new_advt_last_step.first.rep_photo.url}}" class="d-block me-2 mb-3"  width="400" height="325" alt="Main Image">
+            <input type="text" class="form-control visually-hidden " name='advt' value="{{new_advt.id}}">
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-2 col-form-label d-flex flex-column pt-0">Фотография для обложки <span class="text-muted">(Эту фотографию будут видеть в первую очередь)</span></label>
+
+                <div class="col-sm-4">
+                    {{form.rep_photo|as_crispy_field}}
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-2 col-form-label d-flex flex-column pt-0">Видео</label>
+
+                <div class="col-sm-4">
+                    {{form.video|as_crispy_field}}
+                </div>
+            </div>
+            <h2 class="text-start mb-4">Дополнительные фотографии</h2>
+            <div class="d-flex flex-row justify-content-start mt-3" style="width: 650px;">
+                {%if new_advt.new_advt_images.all%}
+                    {% for room_image in new_advt.new_advt_images.all %}
+                    <div class="">
+                        <img src="{{room_image.image.url}}" class="d-block me-2" width="95" height="75" alt="Room Images">
+                    </div>
+                    {%endfor%}
+                {%else%}
+                    Изображений нет
+                {%endif%}
+            </div>
+            <div class="mb-3 row w-50 mt-2 ps-2">
+                <a href="{%url 'rental:advt_add_images' new_advt.id%}" role="button" class="btn btn-secondary">Перейти к форме добавления изображений</a>
+            </div>
+            <hr>
+            <h2 class="text-start mb-3">Описание</h2>
+            <div class="mb-3 row">
+                <div class="col-sm-6">
+                    {{form.description|as_crispy_field}}
+                </div>
+            </div>
+            <hr>
+            <h2 class="text-start mb-4">Условия сделки</h2>
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-2 col-form-label pt-0">Арендная плата</label>
+                <div class="col-sm-4 d-flex flex-row justify-content-start align-items-start">
+                    {{form.price|as_crispy_field}}
+                    <div class="ms-3">за сутки</div>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-2 col-form-label pt-0">Залог
+                    <button type="button" class="btn btn-white p-0 ms-2 rounded-circle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-question-circle-fill" viewBox="0 0 16 16"
+                        data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Если жилец что-то сломает или неожиданно съедет, эта сумма компенсирует ваши расходы. После окончания действия договора остаток надо будет вернуть.">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247zm2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z"></path>
+                        </svg>
+                    </button>
+                </label>
+                <div class="col-sm-4 d-flex flex-row justify-content-start align-items-start">
+                    {{form.deposit|as_crispy_field}}
+                    <div class="ms-3">за весь период</div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-outline-dark mt-3">Обновить информацию и выйти</button>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,253 @@
+{%  extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <div class="container mt-5">
+        <div class="row d-flex flex-row">
+            
+        <div class="col-md-8 d-flex flex-column justify-content-start">
+            <h2 class="text-start mb-3"> {{ad.new_advt_information.first.number_of_rooms}}-к. квартира, {{ad.new_advt_information.first.square_feet}} м², {{ad.new_advt_information.first.floor}}/{{ad.new_advt_information.first.floors_at_house}} эт.</h2>
+
+            <div class="d-flex flex-row justify-content-start">
+                {%if not fav %}
+                <a href="{%url 'rental:advt_to_favorite' ad.id%}" class="btn btn-white border-1 border-dark" role="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#0d6efd" class="bi bi-suit-heart me-2" viewBox="0 0 16 16">
+                        <path d="m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z"/>
+                      </svg>
+                    Добавить в избранное
+                </a>
+                {%else%}
+                <a href="{%url 'rental:advt_from_favorite' ad.id%}" class="btn btn-white border-1 border-dark" role="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-suit-heart me-2" viewBox="0 0 16 16">
+                        <path d="m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z"/>
+                      </svg>
+                    <span style="color: red;">Удалить из избранного</span>
+                </a>
+                {%endif%}
+            </div>
+
+            <div id="carouselExampleIndicators"  style="width: 650px; height: 450px ;" class="carousel slide mt-3" data-bs-ride="true">
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="{{ad.new_advt_last_step.first.rep_photo.url}}" class="d-block"  width="650" height="450" alt="...">
+                  </div>
+                    {% for room_image in ad.new_advt_images.all %}
+                        <div class="carousel-item">
+                            <img src="{{room_image.image.url}}" class="d-block" width="650" height="450" alt="Room Image">
+                        </div>
+                    {%endfor%}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+
+              <div class="d-flex flex-row justify-content-start mt-3" style="width: 650px;">
+                <img src="{{ad.new_advt_last_step.first.rep_photo.url}}" class="d-block me-2"  width="75" height="55" alt="Main Image">
+                {% for room_image in ad.new_advt_images.all %}
+                    <div class="">
+                        <img src="{{room_image.image.url}}" class="d-block me-2" width="75" height="55" alt="Room Images">
+                    </div>
+                {%endfor%}
+              </div>
+
+
+              {%if ad.is_documents_checked %}
+              <button type="button" class="btn mt-4 w-25 d-flex flex-row align-content-center"  style="background: #e2ffd6; font-size: 14px;"
+              onmouseover="this.style.background='#B9ED85';" onmouseout="this.style.background='#e2ffd6';"
+              data-bs-toggle="modal" data-bs-target="#exampleModal">
+
+              <div class="d-flex flex-wrap align-items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-building-check" viewBox="0 0 16 16">
+                    <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514Z"/>
+                    <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6.5a.5.5 0 0 1-1 0V1H3v14h3v-2.5a.5.5 0 0 1 .5-.5H8v4H3a1 1 0 0 1-1-1V1Z"/>
+                    <path d="M4.5 2a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Z"/>
+                  </svg>
+              </div>
+
+              <div class="">
+                <b>
+                    Жильё проверено
+                </b>
+                <br> Описание и фото реальные
+              </div>
+
+              </button>
+
+              <!-- Modal -->
+                <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel"><b>Что означает "Проверенное Жильё"</b></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            — Жильё соответствует описанию: мы посмотрели его по видео
+                            <br>
+                            — Арендодатель прошёл проверку по документам
+                            <br>
+                            — Гости не жаловались на актуальность объявления или на то, как прошло бронирование
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+              {%endif%}
+
+                <div class="d-flex flex-column mt-4" style="width: 650px;">
+                    <h2 class="text-start mb-3">О квартире</h2>
+
+                    <div class="d-flex flex-row justify-content-between">
+                        <div class="d-flex flex-column" style="width: 325px;">
+                            <p class="mb-1"><span class="text-muted fw-bold " style="font-size: 16px;">Количество комнат:</span> {{ad.new_advt_information.first.number_of_rooms}}</p>
+                            <p class="mb-1"><span class="text-muted fw-bold " style="font-size: 16px;">Общая площадь:</span> {{ad.new_advt_information.first.square_feet}} м²</p>
+                            <p class="mb-1"><span class="text-muted fw-bold " style="font-size: 16px;">Этаж:</span> {{ad.new_advt_information.first.floor}}</p>
+                            {%if ad.new_advt_information.first.balcony or ad.new_advt_informatiom.first.loggia%}
+                            <p class="mb-1"><span class="text-muted fw-bold " style="font-size: 16px;">Балкон или лоджия:</span>
+                                {%if ad.new_advt_information.first.balcony and ad.new_advt_information.first.loggia%}
+                                    балкон и лоджия
+                                 {%elif ad.new_advt_information.first.balcony%}
+                                 балкон
+                                 {%else%}
+                                 лоджия
+                                 {%endif%} 
+                                </p>
+                            {%endif%}
+                        </div>
+                        <div class="d-flex flex-column" style="width: 325px;">
+                            <p class="mb-1"><span class="text-muted fw-bold " style="font-size: 16px;">Техника:</span> 
+                                {%if ad.new_advt_information.first.air_conditioner%}кондиционер,{%endif%}
+                                {%if ad.new_advt_information.first.dishwasher%}стиральная машина,{%endif%}
+                                {%if ad.new_advt_information.first.fridge%}холодильник,{%endif%}
+                                {%if ad.new_advt_information.first.water_heater%}водонагреватель,{%endif%}
+                                {%if ad.new_advt_information.first.stove%}плита,{%endif%}
+                                {%if ad.new_advt_information.first.tv%}телевизор,{%endif%}
+                                {%if ad.new_advt_information.first.hair_dryer%}фен,{%endif%}
+                                {%if ad.new_advt_information.first.washing_machine%}посудомоечная машина,{%endif%}
+                                {%if ad.new_advt_information.first.iron%}утюг{%endif%}
+                            </p>
+                            <p class="mb-1"><span class="text-muted fw-bold " style="font-size: 16px;">Интернет и ТВ:</span>
+                                {%if ad.new_advt_information.first.wi_fi and ad.new_advt_information.first.cabel_TV %}
+                                Wi-Fi, телевидение
+                                {%elif ad.new_advt_information.first.wi_fi%}
+                                Wi-Fi
+                                {%else%}
+                                телевидение
+                                {%endif%} 
+                            </p>
+                            <p class="mb-1"><span class="text-muted fw-bold " style="font-size: 16px;">Комфорт:</span>
+                                {%if ad.new_advt_information.first.bed_sheets%}постельное белье,{%endif%}
+                                {%if ad.new_advt_information.first.towels%}полотенца,{%endif%}
+                                {%if ad.new_advt_information.first.hygiene_products%}средства гигиены{%endif%}
+                            </p>
+                            <p class="mb-1"><span class="text-muted fw-bold " style="font-size: 16px;">Залог:</span> {{ad.new_advt_last_step.first.deposit}} ₽</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-column mt-5" style="width: 650px;">
+                    <h2 class="text-start mb-3">Правила</h2>
+
+                    <div class="d-flex flex-row justify-content-between">
+                        <div class="d-flex flex-column" style="width: 325px;">
+                            <p class="mb-1"><span class="text-muted fw-bold " style="font-size: 16px;">Количество гостей:</span> {{ad.new_advt_information.first.max_people}}</p>
+                            <p class="mb-1"><span class="text-muted fw-bold " style="font-size: 16px;">Можно с детьми:</span> {%if ad.new_advt_information.first.childs%}Да{%else%}Нет{%endif%}</p>
+                            <p class="mb-1"><span class="text-muted fw-bold " style="font-size: 16px;">Можно с животыми:</span> {%if ad.new_advt_information.first.pets%}Да{%else%}Нет{%endif%}</p>
+                            
+                        </div>
+                        <div class="d-flex flex-column" style="width: 325px;">
+                            <p class="mb-1"><span class="text-muted fw-bold " style="font-size: 16px;">Можно курить:</span> {%if ad.new_advt_information.first.smoking%}Да{%else%}Нет{%endif%}</p>
+                            <p class="mb-1"><span class="text-muted fw-bold " style="font-size: 16px;">Разрешены вечиринки:</span> {%if ad.new_advt_information.first.events%}Да{%else%}Нет{%endif%}</p>
+                            <p class="mb-1"><span class="text-muted fw-bold " style="font-size: 16px;">Есть отчётные документы:</span> {%if ad.new_advt_information.first.accounting_documents%}Да{%else%}Нет{%endif%}</p>
+                            <p class="mb-1"><span class="text-muted fw-bold " style="font-size: 16px;">Помесячная аренда:</span> {%if ad.new_advt_information.first.monthly_rent%}Да{%else%}Нет{%endif%}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-column mt-5" style="width: 650px;">
+                    <h2 class="text-start mb-3">Расположение</h2>
+                    <p>{{ad.new_advt_location.first.region}}, {{ad.new_advt_location.first.city}}, {{ad.new_advt_location.first.street}}</p>
+
+                    <div>
+                        {{ad.geolocation}}
+                    </div>
+                </div>
+
+                <div class="d-flex flex-column mt-5" style="width: 650px;">
+                    <h2 class="text-start mb-3">Описание</h2>
+                    <p>{{ad.new_advt_last_step.first.description}}</p>
+                </div>
+
+                <div class="d-flex flex-column mt-5" style="width: 650px;">
+                    <h2 class="text-start mb-3">О доме</h2>
+
+                    <div class="d-flex flex-row justify-content-between">
+                        <div class="d-flex flex-column" style="width: 325px;">
+                            <p class="mb-1"><span class="text-muted fw-bold " style="font-size: 16px;">Этажей в доме:</span> {{ad.new_advt_information.first.floors_at_house}}</p>
+                        </div>
+                        <div class="d-flex flex-column" style="width: 325px;">
+                            <p class="mb-1"><span class="text-muted fw-bold " style="font-size: 16px;">Парковка:</span>
+                                {{ad.new_advt_information.first.parking}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+        <div class="col-md-3 sticky-top" style="height: 350px;">
+            <h2 class="text-start mb-5"> от {{ad.new_advt_last_step.first.price}} ₽ за сутки</h2>
+
+            <form action="" method="POST">
+                {% csrf_token%}
+                <div class="mb-3">
+                    <label for="dateStart" class="form-label" style="font-size: 22px;"><b>Дата заселения</b></label>
+                    <!-- <input class="form-control" type="date" id="dateStart" name="dateStart" style="height:50px"> -->
+                    {{form.start_date}}
+                </div>
+                <div class="mb-4">
+                    <label for="dateStart" class="form-label" style="font-size: 22px;"><b>Дата выезда</b></label>
+                    <!-- <input class="form-control" type="date" id="dateEnd" name="dateEnd" style="height:50px"> -->
+                    {{form.end_date}}
+                </div>
+
+                <button type="submit" class="btn btn-dark btn-lg w-100">Отправить запрос</button>
+            </form>
+
+            <div class="d-flex flex-row justify-content-between mt-5">
+                <div class="">
+                    <a href="" class="text-decoration-none ps-1">{{ad.host.first_name}}</a>
+                    <p class="ps-1 mb-0">Арендодатель</p>
+                    <p class="ps-1 m-0 mt-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope me-2" viewBox="0 0 16 16">
+                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+                          </svg>
+                        {{ad.host.email}}
+                    </p>
+                    <p class="ps-1 mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone-fill me-2" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+                          </svg>
+                        {{ad.host.phone_number}}
+                    </p>
+                    <span class="rounded-3 p-1" style="background: #d7fcc6; font-size: 12px;">Документы проверены</span>
+                    
+                </div>
+                <div class="">
+                    <img src="{{ad.host.image.url}}" alt="Host Avatar" width="60" height="60" class="rounded-circle">
+                </div>   
+            </div>
+            <a role="button" href="{%url 'chat:chat_with_user' ad.host.id%}" class="btn btn-outline-dark btn-lg w-100 mt-4">Написать арендодателю</a>
+        </div>
+        </div>
+    </div>
+
+{% endblock %}

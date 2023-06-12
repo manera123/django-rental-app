@@ -1,0 +1,37 @@
+{%  extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="d-flex flex-column align-items-center justify-content-center" style="background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url('static/images/background_image.jpg') center / cover;
+width:100%; height:500px;">
+
+<div class="input-group input-group-lg d-flex w-75 flex-row justify-content-center align-content-center" style="">
+  <input type="text" class="form-control" placeholder="Поиск по объявлениям" aria-label="Usernam  e" aria-describedby="addon-wrapping">
+  <button class="btn btn-dark" type="button" style="background-color: #2a2562;" id="button-addon2">Найти</button>
+</div>
+</div>
+<div class="container text-center mt-3">
+
+          <h2 class="text-start mb-5">Обьявления</h2>
+
+          <div class="d-flex flex-row justify-content-between">
+            {% for room in rooms %}
+            {% if room.is_documents_checked and room.is_completed and not room.is_archived%}
+            <div class="card" style="width: 290px;">
+              <img src="{{room.new_advt_last_step.first.rep_photo.url}}" width="210" height="156" class="card-img-top" alt="Room Image">
+              <div class="card-body d-flex flex-column align-items-start">
+                <h5 class="card-title text-start text-decoration-none w-100 "><a href="{%url 'rental:advt' room.id%}" style="font-size: 16px;">{{room.new_advt_information.first.number_of_rooms}}-к. квартира, {{room.new_advt_information.first.square_feet}} м², {{room.new_advt_information.first.floor}}/{{room.new_advt_information.first.floors_at_house}} эт.</a>
+              </h5>
+                <p class="card-text text-start mb-1"><b>{{room.new_advt_last_step.first.price}} ₽</b> за сутки</p>
+                <p class="mb-2 mt-0 text-muted text-start">{{room.new_advt_location.first.city}}, {{room.new_advt_location.first.street}}</p>
+              <div>
+                <a href="{%url 'rental:advt' room.id%}" class="btn btn-dark mt-2" style="background-color: #2a2562;">Подробнее</a>
+              </div>
+              </div>
+            </div>
+            {%endif%}
+          {%endfor%}
+        </div>
+</div>
+
+{% endblock %}

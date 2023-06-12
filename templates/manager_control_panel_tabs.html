@@ -1,0 +1,14 @@
+<ul class="nav nav-tabs mb-3 d-flex flex-direction-row justify-content-start">
+    <li class="nav-item">
+      <a class="nav-link{% if active == 'active' %} active{% endif %}  text-dark fw-bold" href="{%url 'accounts:manager_control_panel'%}">Новые объявления</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link{% if active == 'reqs' %} active{% endif %}  text-dark fw-bold" href="{%url 'accounts:manager_control_panel_documents_req'%}">Заявки на проверку документов</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link{% if active == 'accepted' %} active{% endif %}  text-dark fw-bold" href="{%url 'accounts:manager_control_panel_advts_approved'%}">Одобренные объявления</a>
+      </li>
+    <li class="nav-item">
+      <a class="nav-link{% if active == 'approved' %} active{% endif %} text-dark fw-bold" href="{%url 'accounts:manager_control_panel_documents_approved'%}">Подтвержденные документы</a>
+    </li>
+</ul>

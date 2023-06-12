@@ -1,0 +1,47 @@
+{% load static%}
+
+<div class="container-fluid bg-white">
+<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-1 mb-0 p-0 border-bottom">
+    <a href="{% url 'rental:index'%}" class="d-flex align-items-center col-md-1  mb-md-0 ms-3 text-dark text-decoration-none">
+        <img src="{% static 'images/logo_rental.png' %}" alt="" style="width: 260px; height: 40px;">
+    </a>
+
+    <a href=""></a>
+    <a href=""></a>
+
+    {% if not request.user.is_authenticated %}
+    <div class="col-md-3 text-end">
+      <a class="btn btn-primary me-2"href="{% url 'accounts:login' %}" role="button">Войти</a>
+      <a class="btn btn-outline-primary me-2"href="{% url 'accounts:signup' %}" role="button">Регистрация</a>
+    </div>
+    {% elif request.user.is_authenticated %}
+       <div class="d-flex flex-row align-items-center justify-content-between">
+        <a href="{%url 'accounts:profile_favorites'%}" class="link-secondary me-3" role="button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Избранное">
+            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+          </svg>
+        </a>
+        <a href="{%url 'chat:index'%}" class="link-secondary me-3" role="button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="23" height="27" fill="currentColor" class="bi bi-chat-fill" viewBox="0 0 16 16" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Сообщения">
+            <path d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9.06 9.06 0 0 0 8 15z"/>
+          </svg>
+        </a>
+        <div class="dropdown text-end">
+            <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle me-3" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="{{ user.image.url }}" alt="profile_image" width="36" height="36" class="rounded-circle">
+              {{request.user.first_name}}
+            </a>
+
+            <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+              <li><a class="dropdown-item" href="{% url 'accounts:profile' %}">Профиль</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'accounts:logout' %}">Выйти</a></li>
+            </ul>
+        </div>
+        <a href='{% url 'rental:advt_add_step_1'%}'class="btn btn-outline-dark" style="font-size: 14px;">Разместить обьявление</a>
+       </div>
+    {% endif%}
+</header>
+</div>
+
+

@@ -1,0 +1,64 @@
+<img class="rounded-circle account-img" src="{{ user.image.url }}" width="100" height="100">
+<strong class="mt-2"style="font-size: 20px;">{{ user.first_name }}</strong>
+<hr class="m-0 mt-2 w-75">
+<strong class="mt-2 mb-2"style="font-size: 18px;">Мои данные </strong>
+<p class="mb-2">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-lines-fill me-2" viewBox="0 0 16 16">
+        <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z"/>
+    </svg>
+    {{ user.first_name }} {{ user.last_name }}
+</p>
+<p class="mb-2">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope me-2" viewBox="0 0 16 16">
+        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+      </svg>
+    {{user.email}}
+</p>
+<p class="mb-2">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone-fill me-2" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+      </svg>
+    {{user.phone_number}}
+</p>
+
+<p class="mt-2">
+    <a href="{% url 'accounts:profile_edit'%}" class="btn btn-sm btn-outline-dark" role="button">Редактировать</a>
+</p>
+{% if request.user.approved %}
+<span class="rounded-3 p-1 w-75" style="background: #d7fcc6; font-size: 12px;">Документы проверены</span>
+{%else%}
+<span class="rounded-3 p-1 w-75" style="background: #fcc6c6; font-size: 12px;">Документы не проверены</span>
+<p class="mt-2">
+  <a href="{% url 'rental:documents_check_request'%}" class="btn btn-sm btn-outline-dark" role="button">Подтвердить личность</a>
+</p>
+{%endif%}
+{% if request.user.is_manager %}
+<hr class="m-0 mt-2 mb-3 w-75">
+<ul class="nav nav-pills d-flex flex-column w-75">
+  <li class="nav-item">
+    <a class="nav-link h6  {% if active == 'manager' %} active{% endif %}" aria-current="page" href="{% url 'accounts:manager_control_panel'%}">Панель менеджера</a>
+  </li>
+</ul>
+{% endif %}
+<hr class="m-0 mt-2 mb-3 w-75">
+<ul class="nav nav-pills d-flex flex-column w-75">
+  <li class="nav-item">
+    <a class="nav-link h6  {% if active == 'user_reservations' %} active{% endif %}" aria-current="page" href="{% url 'accounts:profile_reservations'%}">Мои запросы на заселение</a>
+  </li>
+</ul>
+<hr class="m-0 mt-2 mb-3 w-75">
+<ul class="nav nav-pills d-flex flex-column w-75">
+    <li class="nav-item">
+      <a class="nav-link h6  {% if active == 'user_advts' %} active{% endif %}" aria-current="page" href="{% url 'accounts:profile'%}">Мои объявления</a>
+    </li>
+    <li class="nav-item mt-2">
+      <a class="nav-link h6 {% if active == 'user_favs' %} active{% endif %}" href="{% url 'accounts:profile_favorites'%}">Избранное</a>
+    </li>
+</ul>
+<hr class="m-0 mt-2 mb-3 w-75">
+<ul class="nav nav-pills  d-flex flex-column w-75">
+  <li class="nav-item">
+    <a class="nav-link h6  {% if active == 'reservation_requests' %} active{% endif %}" aria-current="page" href="{% url 'accounts:profile_reservation_requests'%}">Запросы на заселение</a>
+  </li>
+</ul>
+<a href="" class="h4"></a>

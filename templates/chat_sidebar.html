@@ -1,0 +1,72 @@
+<div class="col-md-3 d-flex flex-column p-0">
+    <h2 class="mb-0">Чаты</h2>
+    <hr>
+    <input type="search" class="form-control mb-2" placeholder="Search..." aria-label="Search">
+    {% load tags %}
+    {% for chat in chat_logs %}
+		{% if chat.sender|get_user == user %}
+        <a href="{%url 'chat:chat_with_user' chat.receiver|get_id%}" class="text-decoration-none mb-2">
+            <div class="d-flex flex-row border border-2 rounded-3 p-1">
+                <img src="{{chat.receiver|get_image}}" height="56" width="56" class="rounded-circle" alt="User Image">
+                <div class="ms-4">
+                    <p class="fw-bold">{{chat.receiver|get_first_name}} {{chat.receiver|get_last_name}}</p>
+                </div>
+            </div>
+        </a>
+
+		{% else %}
+			{% if chat.messages__id__max|is_seen %}
+            <a href="{%url 'chat:chat_with_user' chat.sender|get_id%}" class="text-decoration-none mb-2">
+                <div class="d-flex flex-row border border-2 rounded-3 p-1">
+                    <img src="{{chat.sender|get_image}}" height="56" width="56" class="rounded-circle" alt="User Image">
+                    <div class="ms-4">
+                        <p class="fw-bold">{{chat.sender|get_first_name}} {{chat.sender|get_last_name}}</p>
+                    </div>
+                </div>
+            </a>
+			{% else %}
+            <a href="{%url 'chat:chat_with_user' chat.sender|get_id%}" class="text-decoration-none mb-2">
+                <div class="d-flex flex-row border border-2 rounded-3 p-1">
+                    <img src="{{chat.sender|get_image}}" height="56" width="56" class="rounded-circle" alt="User Image">
+                    <div class="ms-4">
+                        <p class="fw-bold">{{chat.sender|get_first_name}} {{chat.sender|get_last_name}}</p>
+                    </div>
+                </div>
+            </a>
+			{% endif %}
+		{% endif %}
+		
+	{% endfor %}
+   <!-- {% if user_chat_logs %}
+       {%for chat in user_chat_logs.all %}
+           {% if chat.receiver != request.user%}
+           <a href="{%url 'chat:chat_with_user' chat.receiver.id%}" class="text-decoration-none mb-2">
+               <div class="d-flex flex-row border border-2 rounded-3 p-1">
+                   <img src="{{chat.receiver.image.url}}" height="56" width="56" class="rounded-circle" alt="User Image">
+                   <div class="ms-4">
+                       <p class="fw-bold">{{chat.receiver.first_name}} {{chat.receiver.last_name}}</p>
+                   </div>
+               </div>
+           </a>
+           {%elif chat.receiver == request.user%}
+           <a href="{%url 'chat:chat_with_user' chat.sender.id%}" class="text-decoration-none mb-2">
+                <div class="d-flex flex-row border border-2 rounded-3 p-1">
+                    <img src="{{chat.sender.image.url}}" height="56" width="56" class="rounded-circle" alt="User Image">
+                    <div class="ms-4">
+                        <p class="fw-bold">{{chat.sender.first_name}} {{chat.sender.last_name}}</p>
+                    </div>
+                </div>
+            </a>
+            {%elif chat.receiver == request.user and chat.sender == request.user%}
+            <a href="{%url 'chat:chat_with_user' chat.sender.id%}" class="text-decoration-none mb-2">
+                <div class="d-flex flex-row border border-2 rounded-3 p-1">
+                    <img src="{{chat.sender.image.url}}" height="56" width="56" class="rounded-circle" alt="User Image">
+                    <div class="ms-4">
+                        <p class="fw-bold">{{chat.sender.first_name}} {{chat.sender.last_name}}</p>
+                    </div>
+                </div>
+            </a>
+           {% endif%}
+       {% endfor %}
+   {% endif%} -->
+</div>

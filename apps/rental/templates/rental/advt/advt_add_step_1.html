@@ -1,0 +1,40 @@
+{%  extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="container mt-5">
+        <h2 class="mb-3 text-muted">Новое обьявление</h2>
+        <h3 class="d-inline-block me-3">Шаг 1 - Заполнение информации о расположении</h3>
+        <hr>
+        <p class="text-muted">Черновик</p>
+        <div class="d-flex flex-row">
+        {% for ad in  request.user.host_new_advts.all%}
+
+                {%if not ad.is_completed%}
+                    <div class="d-flex flex-row me-3">
+                        <img src="{{ad.new_advt_last_step.first.rep_photo.url}}" class="d-block me-2"  width="75" height="" alt="Main Image">
+                        <div class="p-0 d-flex flex-column">
+                            <a class="text-decoration-none" style="font-size: 14px;">{{ad.new_advt_information.first.number_of_rooms}}-к. квартира, {{ad.new_advt_information.first.square_feet}} м², {{ad.new_advt_information.first.floor}}/{{ad.new_advt_information.first.floors_at_house}} эт.</a>
+                            <a href="{%url 'rental:advt_edit_step_1' ad.id%}" class="btn btn-outline-dark btn-sm mt-2" style="font-size: 14px;">Продолжить заполнение</a>
+                        </div>
+                    </div>
+                {%endif%}   
+                    
+        {%endfor%}
+        </div>
+        <hr>
+        <form method="POST" class="mt-5">
+            {% csrf_token%}
+            <h2 class="text-start mb-3">Расположение</h2>
+            <div class="col-6 d-flex flex-row justify-content-between">
+                {{form.country|as_crispy_field}}
+                {{form.region|as_crispy_field}}
+            </div>
+            <div class="col-6 d-flex flex-row justify-content-between">
+                {{form.city|as_crispy_field}}
+                {{form.street|as_crispy_field}}
+            </div>
+            <button type="submit" class="btn btn-dark mt-3">Перейти к следующему шагу</button>
+        </form>
+    </div>
+{% endblock %}

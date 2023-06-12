@@ -1,0 +1,62 @@
+{%  extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+<div class="container-fluid">
+	{% for m in chat_logs %}
+		{% if m.sender.user == request.user %}
+			<div class="row mt-2 mr-2">
+				<div class="col-sm-1 mr-1">
+					<span class="badge bg-info">
+						<i class="fa fa-arrow-left"></i>
+					</span>
+				</div>
+				<div class="col-sm p-1">
+					<button class="btn border border-light rounded message-to w-100" data-user-id="{{ m.receiver }}" data-ajax-url="{% url 'chat:view-messages' %}">
+						<h6 class="font-weight-bold p-1">
+							Messages to {{ m.receiver.user.first_name }} {{ m.receiver.user.last_name }}
+						</h6>
+					</button>
+				</div>
+			</div>
+
+		{% else %}
+			{% if m.messages__id__max %}
+				<div class="row mt-2 mr-2">
+					<div class="col-sm-1 mr-2">
+						<span class="badge bg-info">
+							<i class="fa fa-arrow-right"></i>
+						</span>
+					</div>
+					<div class="col-sm p-1">
+						<button class="btn border border-light rounded message-from w-100" data-user-id="{{ m.sender }}" data-ajax-url="{% url 'chat:view-messages' %}">
+							<h6 class="font-weight-bold p-1">
+								Messages from {{ m.sender.user.first_name }} {{ m.sender.user.last_name }}
+							</h6>
+						</button>
+					</div>
+				</div>
+
+			{% else %}
+				<div class="row mt-2">
+					<div class="col-sm-1 mr-2">
+						<span class="badge bg-info">
+							<i class="fa fa-arrow-right"></i>
+						</span>
+					</div>
+					<div class="col-sm unseen mt-1 p-1" data-ajax-url="{% url 'handle-unseen-messages' %}" >
+						<button class="btn border border-light rounded message-from w-100" data-user-id="{{ m.sender }}" data-ajax-url="{% url 'chat:view-messages' %}">
+							<h6 class="font-weight-bold p-1">
+								Messages from {{ m.sender.user.firstname }} {{ m.sender.user.lastname }}
+							</h6>
+						</button>
+				  	</div>
+				  	<span class="badge bg-light border border-danger rounded-circle mb-auto">
+			  			{{ m.unseen_count }}
+			  		</span>
+				</div>
+			{% endif %}
+		{% endif %}
+		
+	{% endfor %}
+
+</div>

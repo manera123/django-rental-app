@@ -1,0 +1,159 @@
+{%  extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="container mt-5">
+        <h2 class="mb-3 text-muted me-3">Новое обьявление </h2>
+        <h3 class="d-inline-block me-3">Шаг 2 - Заполнение информации о квартире, правила заселения</h3>
+        <hr>
+        <p class="d-flex flex-row justify-content-start align-items-center">
+            <a href="{% url 'rental:advt_add_step_1'%}"type="button" class="btn btn-secondary d-inline-block me-5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                  </svg>
+                 Назад к шагу 1
+            </a>
+
+            <span class="text-muted d-inline-block">Заполнение информации о расположении</span>
+        </p>
+
+        <form method="POST" class="mt-5">
+            {% csrf_token%}
+            <h2 class="text-start mb-3">О квартире</h2>
+            <input type="text" class="form-control visually-hidden" name='advt' value="{{new_advt.id}}">
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Этаж</label>
+                <div class="col-sm-1">
+                    {{form.floor|as_crispy_field}}
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Количество комнат</label>
+                <div class="col-sm-1">
+                    {{form.number_of_rooms|as_crispy_field}}
+                    <div class="d-flex flex-row justify-content-between align-items-start"> 
+                        {{form.balcony|as_crispy_field}}
+                        <button type="button" class="btn btn-white p-0 ms-2 rounded-circle">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-question-circle-fill" viewBox="0 0 16 16"
+                            data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Навесная конструкция — есть собственные стены и пол">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247zm2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="d-flex flex-row justify-content-between align-items-start"> 
+                        {{form.loggia|as_crispy_field}}
+                        <button type="button" class="btn btn-white p-0 ms-2 rounded-circle">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-question-circle-fill" viewBox="0 0 16 16"
+                            data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Отличается от балкона тем, что встроена в дом">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247zm2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="staticEmail" class="col-sm-2 col-form-label">Общая площадь (м²)</label>
+                    <div class="col-sm-2">
+                        {{form.square_feet|as_crispy_field}}
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Техника</label>
+                <div class="col-sm-2">
+                    {{form.air_conditioner|as_crispy_field}}
+                    {{form.fridge|as_crispy_field}}
+                    {{form.stove|as_crispy_field}}
+                    {{form.microwave|as_crispy_field}}
+                    {{form.washing_machine|as_crispy_field}}
+                 </div>
+                 <div class="col-sm-3">
+                    {{form.dishwasher|as_crispy_field}}
+                    {{form.water_heater|as_crispy_field}}
+                    {{form.tv|as_crispy_field}}
+                    {{form.hair_dryer|as_crispy_field}}
+                    {{form.iron|as_crispy_field}}
+                 </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Интернет и ТВ</label>
+                <div class="col-sm-2">
+                    {{form.wi_fi|as_crispy_field}}
+                    {{form.cabel_TV|as_crispy_field}}
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Комфорт</label>
+                <div class="col-sm-2">
+                    {{form.bed_sheets|as_crispy_field}}
+                    {{form.towels|as_crispy_field}}
+                    {{form.hygiene_products|as_crispy_field}}
+                </div>
+            </div>
+            <hr>
+            <h2 class="text-start mb-3">О доме</h2>
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Этажей в доме</label>
+                <div class="col-sm-1">
+                    {{form.floors_at_house|as_crispy_field}}
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Парковка<br>(выберите нужный вариант)</label>
+                <div class="col-sm-2">
+                    {{form.parking|as_crispy_field}}
+                </div>
+            </div>
+            <hr>
+            <h2 class="text-start mb-3">Правила заселения</h2>
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Максимум гостей</label>
+                <div class="col-sm-1">
+                    {{form.max_people|as_crispy_field}}
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Можно с детьми</label>
+                <div class="col-sm-1">
+                    {{form.childs|as_crispy_field}}
+                </div>
+                <label for="staticEmail" class="col-sm-2 col-form-label">Разрешено курить</label>
+                <div class="col-sm-1">
+                    {{form.smoking|as_crispy_field}}
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Можно с животными</label>
+                <div class="col-sm-1">
+                    {{form.pets|as_crispy_field}}
+                </div>
+                <label for="staticEmail" class="col-sm-2 col-form-label">Разрешены вечиринки</label>
+                <div class="col-sm-1">
+                    {{form.events|as_crispy_field}}
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Есть отчётные документы</label>
+                <div class="col-sm-1">
+                    {{form.accounting_documents|as_crispy_field}}
+                </div>
+                <label for="staticEmail" class="col-sm-2 col-form-label">Возможна помесячная аренда
+                    <button type="button" class="btn btn-white p-0 ms-2 rounded-circle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-question-circle-fill" viewBox="0 0 16 16"
+                        data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Укажите, если готовы сдать объект сразу на месяц">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247zm2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z"></path>
+                        </svg>
+                    </button>
+                </label>
+                <div class="col-sm-1">
+                    {{form.monthly_rent|as_crispy_field}}
+                </div>
+            </div>
+
+
+            <button type="submit" class="btn btn-dark mt-3 mb-5">Перейти к последнему шагу</button>
+        </form>
+    </div>
+{% endblock %}
